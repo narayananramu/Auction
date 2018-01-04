@@ -1,0 +1,86 @@
+<%layout('layout.ejs')%>
+<script src="/js/auctionRoom.js"></script>
+<div class="container">
+    <h2>New Auction</h2><br/><br/>
+    <div class="form-group row">
+            <div class="col-sm-3">
+                <label>Item</label>
+            </div>
+            <div class="col-sm-5">
+                <label><%= auction[0].name %></label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-3">
+                <label>Item Description</label>
+            </div>
+            <div class="col-sm-5">
+                <p><%= auction[0].description %></p>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-3">
+                <label>Starting Bid Price</label>
+            </div>
+            <div class="col-sm-5">
+                <div class="input-group">
+                    <div class="input-group-addon">₹</div>
+                    <input type="text" class="form-control" name="itemPrice" placeholder="Amount in INR" value="<%= auction[0].priceStart %>" disabled>
+                    <div class="input-group-addon">.00</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-4">
+                <label>Bid Start Date and Time</label>
+            </div>
+            <div class="col-sm-4">
+                <label><%= moment(new Date(auction[0].bidStart)).format('LLLL')  %></label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-4">
+                <label>Bid End Date and Time</label>
+            </div>
+            <div class="col-sm-4">
+                <label><%= moment(new Date(auction[0].bidEnd)).format('LLLL') %></label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-3">
+                <label>Current Bid</label>
+            </div>
+            <div class="col-sm-5">
+                <% if(session.accountType == "Seller"){ %>
+                <label id="cbid"><%= auction[0].currentBid %></label>
+                <%}%>
+                <% if(session.accountType == "Buyer"){ %>
+                <input type="number" class="form-control" min="<%= auction[0].currentBid %>" value="<%= auction[0].currentBid %>" id="bidPrice" name="bidPrice"/>
+            <%}%>
+            </div>
+            <% if(session.accountType == "Buyer"){ %>
+            <div class="col-sm-3">
+                <button class="btn btn-primary" id="bidMe">Place Bid</button>
+            </div>
+            <% } %>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="tb">
+                <thead>
+                    <th>Bid Value</th>
+                    <th>Bidder Name</th>
+                    <th>Bidder Email</th>
+                    <th>Time</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>--</td>
+                        <td>--</td>
+                        <td>--</td>
+                        <td>--</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
